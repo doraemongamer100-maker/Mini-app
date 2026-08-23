@@ -2,7 +2,7 @@ import os
 import requests
 from flask import Flask, request, render_template_string
 
-# 🔑 Aapka Naya Bot Token yahan set hai
+# 🔑 Aapka Bot Token
 TOKEN = "8979056204:AAG3LVkYw-KlPAmdlVqjM8aKMf25JKGpAqo"
 URL = f"https://api.telegram.org/bot{TOKEN}/"
 
@@ -24,9 +24,9 @@ def edit_message(chat_id, message_id, text, reply_markup=None):
         payload["reply_markup"] = reply_markup
     requests.post(URL + "editMessageText", json=payload)
 
-# 🚀 Telegram Mini App ka Button (Render par deploy karne ke baad yahan apna URL dalein)
+# 🚀 Telegram Mini App ka Button (Aapka Render URL yahan set hai)
 def get_tasks_keyboard():
-    WEB_APP_URL = "https://your-flask-app.onrender.com/webapp" # Render URL se replace karein
+    WEB_APP_URL = "https://mini-app-u5k2.onrender.com/webapp"
     return {
         "inline_keyboard": [
             [{"text": "🚀 Open Task Mini App", "web_app": {"url": WEB_APP_URL}}]
@@ -229,4 +229,4 @@ def webhook():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-      
+    
