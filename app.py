@@ -24,7 +24,7 @@ def edit_message(chat_id, message_id, text, reply_markup=None):
         payload["reply_markup"] = reply_markup
     requests.post(URL + "editMessageText", json=payload)
 
-# 🚀 Telegram Mini App ka Button (Aapka Render URL yahan set hai)
+# 🚀 Telegram Mini App ka Button
 def get_tasks_keyboard():
     WEB_APP_URL = "https://mini-app-u5k2.onrender.com/webapp"
     return {
@@ -33,7 +33,8 @@ def get_tasks_keyboard():
         ]
     }
 
-# 🌐 Telegram Mini App ka Frontend Page
+# 🌐 Telegram Mini App ka Frontend Page (Root aur /webapp dono par chalega)
+@app.route('/', methods=['GET'])
 @app.route('/webapp', methods=['GET'])
 def webapp():
     html_template = """
@@ -148,6 +149,9 @@ def webapp():
 @app.route('/api/process-task', methods=['POST'])
 def process_task_api():
     data = request.get_json()
+    if not data:
+        return {"success": False, "message": "No data received"}, 400
+        
     chat_id = data.get("chat_id")
     selected_task = data.get("task", "Grow")
     text = data.get("url", "")
@@ -206,12 +210,9 @@ def process_task_api():
     else:
         return {"success": False, "message": f"Postback Error: {pb_status}"}
 
-# Standard Webhook route for Telegram Bot messages
-@app.route('/', methods=['GET', 'POST'])
+# Telegram Bot Webhook Handler (POST requests ke liye jab bot par message aaye)
+@app.route('/webhook', methods=['POST'])
 def webhook():
-    if request.method == 'GET':
-        return "Bot is active and running successfully!", 200
-        
     data = request.get_json()
     if not data:
         return "OK", 200
