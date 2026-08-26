@@ -48,9 +48,9 @@ def get_join_keyboard():
         ]
     }
 
-# 🚀 Mini App Web App Button (Apna Render URL yahan dalein)
+# 🚀 Mini App Web App Button (Updated Render URL)
 def get_webapp_keyboard():
-    WEB_APP_URL = "https://mini-app-u5k2.onrender.com/"  # Apna Render URL yahan set karein
+    WEB_APP_URL = "https://mini-appp-0may.onrender.com/"
     return {
         "inline_keyboard": [
             [{"text": "🚀 Open Task Mini App", "web_app": {"url": WEB_APP_URL}}]
@@ -159,7 +159,6 @@ def webapp():
                 let resultDiv = document.getElementById('result');
 
                 if (!userId) {
-                    // Fallback agar direct browser se open ho
                     userId = 123456; 
                 }
 
@@ -421,11 +420,9 @@ def process_task_api():
     if not chat_id or not text:
         return {"success": False, "message": "Invalid parameters"}, 400
 
-    # Force Channel Join check before processing
     if not check_user_subscription(chat_id):
         return {"success": False, "message": "Access Denied! Please join our channel first."}, 403
 
-    # Background thread mein task run karna taaki Mini App freeze na ho
     if selected_task == "Vivago":
         threading.Thread(target=process_vivago_events, args=(chat_id, text)).start()
     else:
@@ -450,7 +447,7 @@ def webhook():
         
         if text == "/start":
             welcome_text = "🚀 *Welcome to Task Bot*\n\nClick below to open the Mini App and complete your tasks easily!"
-            send_message(chat_id, welcome_text, reply_markup=getabb_keyboard() if 'getabb_keyboard' else get_webapp_keyboard())
+            send_message(chat_id, welcome_text, reply_markup=get_webapp_keyboard())
             
     elif "callback_query" in data:
         cq = data["callback_query"]
@@ -478,4 +475,4 @@ def webhook():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-    
+                                                      
