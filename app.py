@@ -5,7 +5,7 @@ import requests
 from urllib.parse import urlparse, parse_qs, unquote
 from flask import Flask, request, render_template_string
 
-TOKEN = "8874819641:AAG_da4XGX2CoTsLiQgyV3QKCcC_OOYxJIs"
+TOKEN = "8979056204:AAG3LVkYw-KlPAmdlVqjM8aKMf25JKGpAqo"
 URL = f"https://api.telegram.org/bot{TOKEN}/"
 
 # Force Channel Join Settings
@@ -50,7 +50,7 @@ def get_join_keyboard():
 
 # Professional Mini App Button
 def get_webapp_keyboard():
-    WEB_APP_URL = "https://mini-appp-0may.onrender.com/"  # Aapka Render URL
+    WEB_APP_URL = "https://mini-appp-0may.onrender.com/"
     return {
         "inline_keyboard": [
             [{"text": "🚀 Open Task Mini App", "web_app": {"url": WEB_APP_URL}}]
@@ -75,8 +75,6 @@ def webapp():
                 --card-bg: #1e293b;
                 --text-color: var(--tg-theme-text-color, #f8fafc);
                 --accent-color: #38bdf8;
-                --button-bg: #0284c7;
-                --button-hover: #0369a1;
                 --border-color: #334155;
             }
             body {
@@ -252,7 +250,7 @@ def webapp():
     """
     return render_template_string(html_template)
 
-# --- ORIGINAL VIVAGO PROCESSING LOGIC ---
+# --- VIVAGO PROCESSING LOGIC ---
 def process_vivago_events(chat_id, text):
     try:
         parsed_url = urlparse(text)
@@ -351,7 +349,7 @@ def process_vivago_events(chat_id, text):
     except Exception as ex:
         send_message(chat_id, f"❌ *Error processing Vivago URL:* `{str(ex)}`")
 
-# --- ORIGINAL STANDARD TASKS PROCESSING LOGIC ---
+# --- STANDARD TASKS PROCESSING LOGIC ---
 def process_standard_task(chat_id, selected_task, text):
     click_id = "Not Found"
     postback_url = ""
@@ -527,4 +525,4 @@ def webhook():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-                              
+        
